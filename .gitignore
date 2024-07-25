@@ -1,0 +1,33 @@
+# General
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.log
+db.sqlite3
+/venv/
+.env
+config.py
+.mypy_cache/
+.pytest_cache/
+.coverage
+
+# Django specific
+/migrations/
+
+# React
+/node_modules/
+/build/
+/public/**/*.map
+/.env.local
+/.env.development.local
+/.env.test.local
+/.env.production.local
+.npmrc
+.next/
+coverage/
+*.log
+.cache/
