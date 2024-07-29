@@ -8,7 +8,9 @@ from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identi
 from models.blog import Blog
 from models.user import User
 from service.blog_service import BlogService
+import logging
 
+logger = logging.getLogger(__name__)
 # Import mail object from main app module
 # from app import mail
 
@@ -81,6 +83,7 @@ class BlogAPI:
             blog_id = self.blog_service.save_to_db(blog_post)
             return jsonify(self.response_format(data={"id": blog_id}, message="Successfully posted a blog")), 201
         except Exception as ex:
+            logger.error("Error getting blogs: %s", ex)
             return jsonify(self.response_format(error=str(ex), message="Failed to post blog")), 500
 
 
@@ -94,6 +97,7 @@ class BlogAPI:
             blogs_json = json_util.dumps(formatted_blogs)
             return jsonify(self.response_format(data=json.loads(blogs_json), message="Successfully retrieved all blogs")), 200
         except Exception as ex:
+            logger.error("Error getting blogs: %s", ex)
             return jsonify(self.response_format(error=str(ex), message="Failed to retrieve blogs")), 500
 
 
@@ -106,6 +110,7 @@ class BlogAPI:
             else:
                 return jsonify(self.response_format(error="Blog not found")), 404
         except Exception as ex:
+            logger.error("Error getting blogs: %s", ex)
             return jsonify(self.response_format(error=str(ex), message="Failed to retrieve blog")), 500
         
 
@@ -132,6 +137,7 @@ class BlogAPI:
             else:
                 return jsonify(self.response_format(error="Failed to update blog")), 400
         except Exception as ex:
+            logger.error("Error getting blogs: %s", ex)
             return jsonify(self.response_format(error=str(ex), message="Failed to update blog")), 500
 
 
@@ -144,6 +150,7 @@ class BlogAPI:
             else:
                 return jsonify(self.response_format(error="Failed to delete blog")), 404
         except Exception as ex:
+            logger.error("Error getting blogs: %s", ex)
             return jsonify(self.response_format(error=str(ex), message="Failed to delete blog")), 500
         
 
@@ -184,6 +191,7 @@ class BlogAPI:
             # self.send_mail(email, verification_token)
             return jsonify(self.response_format(data={"id": user_id}, message="Successfully registered!")), 201
         except Exception as ex:
+            logger.error("Error getting blogs: %s", ex)
             return jsonify({'error': str(ex), 'message': 'Failed to register'}), 500
         
 
@@ -202,14 +210,9 @@ class BlogAPI:
             else:
                 return jsonify(self.response_format(error="Invalid usernmae or password")), 401
         except Exception as ex:
+            logger.error("Error getting blogs: %s", ex)
             return jsonify(self.response_format(error=str(ex), message="Error trying to login")), 500
 
-    
-
-
-
-        
-        
 
 
 blog_api = BlogAPI('blog', __name__)
