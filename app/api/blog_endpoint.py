@@ -26,7 +26,7 @@ class BlogAPI:
         # in tests without altering the logic of `BlogAPI`.
         self.blog_service = BlogService()
 
-        self.bp = Blueprint(bp_name, import_name)
+        self.bp = Blueprint(bp_name, import_name, url_prefix='/api')
         self.bp.add_url_rule('/', view_func=self.home, methods=['GET'])
         self.bp.add_url_rule('/write', view_func=self.write, methods=['POST'])
         self.bp.add_url_rule('/blogs', view_func=self.get_all_blogs, methods=['GET'])
